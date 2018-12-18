@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli"
+	"github.com/ysbrothersk/colorscape/conv"
 )
 
 const (
@@ -13,6 +14,11 @@ const (
 	usage   = "colorscape is a color code conversion tool."
 	version = "0.0.1"
 	author  = "ysbrothersk"
+)
+
+const (
+	codeFlag1 = "code"
+	codeFlag2 = "c"
 )
 
 func main() {
@@ -25,13 +31,23 @@ func main() {
 
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:  "hex, x",
+			Name:  fmt.Sprintf("%s, %s", codeFlag1, codeFlag2),
 			Usage: "Hex color code",
 		},
 	}
 
 	app.Action = func(c *cli.Context) error {
-		fmt.Println(c.String("hex"))
+		hexArg := c.String(codeFlag1)
+
+		if len(hexArg) > 0 {
+			rgb, err := conv.ToRgb(hexArg)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			fmt.Println(rgb[0], rgb[1], rgb[2])
+		}
+
 		return nil
 	}
 
