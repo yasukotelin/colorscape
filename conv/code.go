@@ -1,6 +1,9 @@
 package conv
 
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+)
 
 // ToRgb は16進数カラーコード文字列から10進数RGB表記へと変換する関数
 func ToRgb(code string) ([3]uint8, error) {
@@ -21,7 +24,7 @@ func ToRgb(code string) ([3]uint8, error) {
 			code[4:6],
 		}
 	default:
-		// todo: エラー出力
+		return rgb, fmt.Errorf("argument error. %s is not code format", code)
 	}
 
 	for i, c := range codes {
