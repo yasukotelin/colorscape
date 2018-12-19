@@ -19,6 +19,8 @@ const (
 const (
 	codeFlag1 = "code"
 	codeFlag2 = "c"
+	rgbFlag1  = "rgb"
+	rgbFlag2  = "r"
 )
 
 func main() {
@@ -32,7 +34,11 @@ func main() {
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:  fmt.Sprintf("%s, %s", codeFlag1, codeFlag2),
-			Usage: "Hex color code",
+			Usage: "Convert hex color code to RGB.",
+		},
+		cli.StringFlag{
+			Name:  fmt.Sprintf("%s, %s", rgbFlag1, rgbFlag2),
+			Usage: "Convert RGB to hex color code.",
 		},
 	}
 
