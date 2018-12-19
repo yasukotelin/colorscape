@@ -6,8 +6,22 @@ import "strconv"
 func ToRgb(code string) ([3]uint8, error) {
 	var rgb [3]uint8
 
-	codes := [3]string{
-		code[0:2], code[2:4], code[4:6],
+	var codes [3]string
+	switch len(code) {
+	case 3:
+		codes = [3]string{
+			code[0:1] + code[0:1],
+			code[1:2] + code[1:2],
+			code[2:3] + code[2:3],
+		}
+	case 6:
+		codes = [3]string{
+			code[0:2],
+			code[2:4],
+			code[4:6],
+		}
+	default:
+		// todo: エラー出力
 	}
 
 	for i, c := range codes {
