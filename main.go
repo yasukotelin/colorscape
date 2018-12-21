@@ -5,8 +5,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/urfave/cli"
 	"github.com/ysbrothersk/colorscape/conv"
+
+	"github.com/urfave/cli"
 )
 
 const (
@@ -14,11 +15,6 @@ const (
 	usage   = "colorscape is a color code conversion tool."
 	version = "0.0.1"
 	author  = "ysbrothersk"
-)
-
-const (
-	codeFlag1 = "code"
-	codeFlag2 = "c"
 )
 
 func main() {
@@ -29,26 +25,23 @@ func main() {
 	app.Version = version
 	app.Author = author
 
-	app.Flags = []cli.Flag{
-		cli.StringFlag{
-			Name:  fmt.Sprintf("%s, %s", codeFlag1, codeFlag2),
-			Usage: "Hex color code",
+	app.Commands = []cli.Command{
+		{
+			Name:    "code",
+			Aliases: []string{"c", "hex"},
+			Usage:   "convert to rgb from hex color code",
+			Action: func(c *cli.Context) error {
+				code := c.Args().First()
+				rgb, err := conv.ToRgb(code)
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				fmt.Println(rgb[0], rgb[1], rgb[2])
+
+				return nil
+			},
 		},
-	}
-
-	app.Action = func(c *cli.Context) error {
-		hexArg := c.String(codeFlag1)
-
-		if len(hexArg) > 0 {
-			rgb, err := conv.ToRgb(hexArg)
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			fmt.Println(rgb[0], rgb[1], rgb[2])
-		}
-
-		return nil
 	}
 
 	if err := app.Run(os.Args); err != nil {
