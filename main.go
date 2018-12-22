@@ -14,7 +14,7 @@ import (
 const (
 	appName = "colorscape"
 	usage   = "colorscape is a color code conversion tool."
-	version = "0.0.1"
+	version = "1.0.0"
 	author  = "ysbrothersk"
 )
 
